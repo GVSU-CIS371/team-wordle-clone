@@ -1,16 +1,16 @@
-import admin from 'firebase-admin'
-import 'dotenv/config';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId,
-    measurementId: process.env.measurmentId
+    apiKey: import.meta.env.VITE_apiKey,
+    authDomain: import.meta.env.VITE_authDomain,
+    projectId: import.meta.env.VITE_projectId,
+    storageBucket: import.meta.env.VITE_storageBucket,
+    messagingSenderId: import.meta.env.VITE_messagingSenderId,
+    appId: import.meta.env.env.VITE_appId,
+    measurementId: import.meta.env.VITE_measurmentId
 };
 
-const app = admin.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-export const db = admin.firestore(app);
+export const db = getFirestore(app);
