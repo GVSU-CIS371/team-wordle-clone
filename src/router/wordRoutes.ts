@@ -34,12 +34,15 @@ export async function get_word(date: string): Promise<string> {
 
 export async function create_word(date: string): Promise<string> {
     const word = getWord(date);
-    const word_data: words = {date: date, word: word};
     const wordRef = collection(db, "wordlist");
+    if (word != 'Fail') {
         await setDoc(doc(wordRef, date), {
           date: date,
           word: word
         });
+    } else {
+        return 'Failed creating word';
+    };
     return word;
 };
 

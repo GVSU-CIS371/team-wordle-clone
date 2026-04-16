@@ -23,6 +23,7 @@
     "@tsconfig/node24": "^24.0.4",
     "@types/firebase": "^2.4.32",
     "@types/node": "^24.12.2",
+    "@types/seedrandom": "^3.0.8",
     "@vitejs/plugin-vue": "^6.0.5",
     "@vue/tsconfig": "^0.9.1",
     "npm-run-all2": "^8.0.4",
