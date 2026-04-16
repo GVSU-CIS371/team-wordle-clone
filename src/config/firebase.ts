@@ -1,5 +1,4 @@
-import {initializeApp} from 'firebase-admin/app'
-import {getFirestore} from 'firebase-admin/firestore'
+import admin from 'firebase-admin'
 import 'dotenv/config';
 
 const firebaseConfig = {
@@ -12,6 +11,6 @@ const firebaseConfig = {
     measurementId: process.env.measurmentId
 };
 
-const app = initializeApp(firebaseConfig);
+const app = admin.initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+export const db = admin.firestore(app);
