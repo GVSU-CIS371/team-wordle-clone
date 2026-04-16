@@ -8,6 +8,10 @@ interface words {
     word: string;
 };
 
+type info = {
+  [key: number]: string | number;
+};
+
 const wordConverter: FirestoreDataConverter<words> = {
   toFirestore(word: words): words {
     return word;
@@ -39,17 +43,17 @@ export async function create_word(date: string): Promise<string> {
     return word;
 };
 
-export async function guess_word(guess: string, word: string): Promise<object> {
-    let info = {};
-    for (let i = 0; i < 5; i++) {
+export function guess_word(guess: string, word: string): { [key: number]: string; } {
+    const info: { [key: number]: string; } = {};
+    for (let i = 0; i < guess.length; i++) {
         if (guess[i] === word[i]) {
-            info = {...info, i: 'correct'};
-            word = word.substring(0, i) + '0' + word.substring(i+1);
+            info[i] = 'correct';
+            word = word.substring(0, i) + '0' + word.substring(i+1, word.length);
         } else if (word.includes(guess.charAt(i))) {
-            info = {...info, i: 'in word'};
-            word = word.substring(0, i) + '0' + word.substring(i+1);
+            info[i] = 'in word';
+            word = word.substring(0, word.indexOf(guess.charAt(i))) + '0' + word.substring(word.indexOf(guess.charAt(i))+1, word.length);
         } else {
-            info = {...info, i: 'not in word'};
+            info[i] = 'not in word';
         }
     };
     return info;
