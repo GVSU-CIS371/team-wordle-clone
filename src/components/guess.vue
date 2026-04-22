@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Tile } from '../stores/gameUI'
+import type { Tile } from '../user/UI'
 
 defineProps<{
   tiles: Tile[]

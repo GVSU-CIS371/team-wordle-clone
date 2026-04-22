@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import GuessRow from './GuessRow.vue'
-import type { Tile } from '../stores/gameUI'
+import type { Tile } from '../user/UI'
 
 defineProps<{
   rows: Tile[][]
