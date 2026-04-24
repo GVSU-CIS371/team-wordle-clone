@@ -3,19 +3,16 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth.ts'
 import { get_score } from '../router/statRoutes.ts'
-import type { user } from '../router/statRoutes.ts'
 
 const router = useRouter()
 const auth = useAuthStore()
 
 
 onMounted(async () => {
-  auth.hydrateFromStorage()
   if (!auth.user) {
     router.push('/login')
     return
   }
-  const stats: user = await get_score(auth.getEmail);
 })
 </script>
 
@@ -27,22 +24,22 @@ onMounted(async () => {
       <div class="stats-grid">
         <div class="stat-box">
           <span class="stat-label">Games Played</span>
-          <span class="stat-value">{{ stats.games }}</span>
+          <span class="stat-value">{{ (await get_score(auth.getEmail)).games }}</span>
         </div>
 
         <div class="stat-box">
           <span class="stat-label">Wins</span>
-          <span class="stat-value">{{ stats.wins }}</span>
+          <span class="stat-value">{{ (await get_score(auth.getEmail)).wins }}</span>
         </div>
 
         <div class="stat-box">
           <span class="stat-label">Average Guesses</span>
-          <span class="stat-value">{{ stats.av }}</span>
+          <span class="stat-value">{{ (await get_score(auth.getEmail)).av }}</span>
         </div>
 
         <div class="stat-box">
           <span class="stat-label">Best Game</span>
-          <span class="stat-value">{{ stats.short }}</span>
+          <span class="stat-value">{{ (await get_score(auth.getEmail)).short }}</span>
         </div>
       </div>
     </div>

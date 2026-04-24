@@ -11,7 +11,6 @@ const auth = useAuthStore()
 const game = useGameUIStore()
 
 onMounted(() => {
-  auth.hydrateFromStorage()
   if (!auth.user) {
     router.push('/login')
   }

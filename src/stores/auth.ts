@@ -9,6 +9,7 @@ interface AuthState {
   user: User | null;
   accessToken: string | null;
   loading: boolean;
+  error: Error | null;
 }
 
 export const useAuthStore = defineStore('auth', {
@@ -16,6 +17,7 @@ export const useAuthStore = defineStore('auth', {
         user: null,
         accessToken: null,
         loading: false,
+        error: null
     }),
     getters: {
         getEmail(): string {return this.user ? this.user.email! : ''}
@@ -26,8 +28,8 @@ export const useAuthStore = defineStore('auth', {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 this.user = userCredential.user;
                 await create_user(email);
-            } catch (error) {
-                console.error("Error creating user document:", error);
+            } catch (error: unknown) {
+                if (error instanceof Error) {this.error = error;}
             }
         },
         async login(email: string, password: string) {
