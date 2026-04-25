@@ -6,7 +6,7 @@ import type { FirestoreDataConverter } from 'firebase/firestore';
 export interface user {
     av: number;
     games: number;
-    short: number;
+    short: number | string;
     wins: number;
 };
 
@@ -29,7 +29,10 @@ export async function update_score(username: string, score: number): Promise<voi
         if (score < 7) {
           win += 1;
         }
-        const shortest: number = Number(score) < userStats.short ? Number(score) : userStats.short;
+        let shortest: number
+        if (typeof userStats.short !== 'string'){
+          shortest = Number(score) < userStats.short ? Number(score) : userStats.short;
+        } else {shortest = Number(score)}
         const statsRef = collection(db, "stats");
         await setDoc(doc(statsRef, username), {
           av: average,
@@ -50,7 +53,7 @@ export async function create_user(email: string): Promise<void> {
   await setDoc(doc(users, email), {
     av: 0,
     games: 0,
-    short: 7,
+    short: 'N/A',
     wins: 0
   });
 };

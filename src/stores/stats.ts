@@ -6,7 +6,7 @@ type StatsState = {
   gamesPlayed: number
   wins: number
   averageGuesses: number
-  bestGame: number
+  bestGame: number | string
 }
 
 export const useStatsStore = defineStore('stats', {
@@ -17,6 +17,11 @@ export const useStatsStore = defineStore('stats', {
     bestGame: 0
   }),
   actions: {
+    async update(user: User, score: number) {
+      if (user.email != null) {
+        await update_score(user.email, score);
+      }
+    },
     async getStats(user: User) {
       if (user.email != null) {
         const stats = await get_score(user.email);
@@ -24,11 +29,6 @@ export const useStatsStore = defineStore('stats', {
         this.wins = stats.wins;
         this.averageGuesses = stats.av;
         this.bestGame = stats.short;
-      }
-    },
-    async update(user: User, score: number) {
-      if (user.email != null) {
-        await update_score(user.email, score);
       }
     }
   }

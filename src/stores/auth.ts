@@ -1,6 +1,6 @@
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { defineStore } from "pinia";
-import { createUserWithEmailAndPassword, type User } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut, type User } from 'firebase/auth';
 import { create_user } from "@/router/statRoutes";
 
 const auth = getAuth();
@@ -43,5 +43,14 @@ export const useAuthStore = defineStore('auth', {
         setUser(user: User | null) {
             this.user = user;
         },
+        async signout() {
+            try {
+                await signOut(auth);
+                this.user = null;
+                console.log("User signed out")
+            } catch (error) {
+                console.error("Error signing out user:", error);
+            }
+        }
     }
 });

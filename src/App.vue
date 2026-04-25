@@ -1,10 +1,16 @@
 <script setup lang="ts">
-  import Gameview from './components/gameview.vue';
-import View from './components/view.vue';
+import { useAuthStore } from './stores/auth'; 
+const authStore = useAuthStore();
 </script>
 
 <template>
   <div id = 'app'>
+    <nav class = 'navigation'>
+      <router-link to="/game">Game</router-link>
+      <router-link to="/stats">Stats</router-link>
+      <button v-if="authStore.user===null" @click="$router.push('/login')">Login</button>
+      <button v-else @click="authStore.signout">Logout</button>
+    </nav>
     <router-view />
   </div>
 </template>

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { guess_word } from '../router/wordRoutes'
+import { list } from '../../util/word_list'
 
 export type TileStatus = 'empty' | 'filled' | 'correct' | 'present' | 'absent'
 
@@ -62,6 +63,9 @@ export const useGameUIStore = defineStore('gameUI', {
     submitGuess(guess: string, word: string) {
       if (this.currentGuess.length < 5) {
         this.message = 'Not enough letters'
+        return
+      } else if (!list.includes(this.currentGuess)){
+        this.message = 'Not a word'
         return
       } else if (this.currentRow > 5) {
         this.message = 'No more guesses left'
