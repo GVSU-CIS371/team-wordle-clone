@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import router from '../router/index.ts'
 import { useAuthStore } from '../stores/auth.ts'
 
-const router = useRouter()
 const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
 
 async function submitLogin() {
+  console.log('login')
   await auth.login(email.value, password.value)
   if (auth.user) {
     router.push('/game')
@@ -34,7 +34,7 @@ async function submitLogin() {
 
       <p v-if="auth.error" class="error-text">{{ auth.error }}</p>
 
-      <button type="button" class="primary-btn" @click="submitLogin">Sign In</button>
+      <button type="button" class="primary-btn" @click="submitLogin()">Sign In</button>
     </div>
   </section>
 </template>

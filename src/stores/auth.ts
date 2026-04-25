@@ -35,10 +35,13 @@ export const useAuthStore = defineStore('auth', {
         async login(email: string, password: string) {
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
+                this.user = userCredential.user;
             } catch (error) {
                 console.error("Error creating user document:", error);
             }
+        },
+        setUser(user: User | null) {
+            this.user = user;
         }
     }
 });

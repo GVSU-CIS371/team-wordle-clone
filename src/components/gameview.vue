@@ -4,17 +4,24 @@ import { useRouter } from 'vue-router'
 import GuessGrid from '../components/guessgrid.vue'
 import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'
 import { useAuthStore } from '../stores/auth.ts'
+import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
 
 const router = useRouter()
-const auth = useAuthStore()
+const authStore = useAuthStore()
 const game = useGameUIStore()
 
 onMounted(() => {
-  if (!auth.user) {
-    router.push('/login')
-  }
-})
+  onAuthStateChanged(getAuth(), (user) => {
+    if (user) {
+      // User is signed in
+      authStore.setUser(user);
+    } else {
+      authStore.setUser(null);
+      router.push('/login');
+    }
+  });
+});
 
 function pressKey(letter: string) {
   game.addLetter(letter)
@@ -34,7 +41,7 @@ function pressBackspace() {
     <div class="game-card">
       <div class="game-head">
         <h1>Wordle Game</h1>
-        <p v-if="auth.user" class="user-email">{{ auth.user.email }}</p>
+        <p v-if="authStore.user" class="user-email">{{ authStore.user.email }}</p>
       </div>
 
       <GuessGrid :rows="game.rows" />
