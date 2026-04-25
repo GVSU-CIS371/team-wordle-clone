@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GuessRow from './GuessRow.vue'
+/*import GuessRow from './guessRow.vue'*/
 import type { Tile } from '../stores/UI'
 
 defineProps<{
@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div class="guess-grid">
-    <GuessRow v-for="(row, index) in rows" :key="index" :tiles="row" />
+    <!--<GuessRow v-for="(row, index) in rows" :key="index" :tiles="row" />-->
   </div>
 </template>
 

@@ -53,10 +53,10 @@ export function guess_word(guess: string, word: string): { [key: number]: string
             info[i] = 'correct';
             word = word.substring(0, i) + '0' + word.substring(i+1, word.length);
         } else if (word.includes(guess.charAt(i))) {
-            info[i] = 'in word';
+            info[i] = 'present';
             word = word.substring(0, word.indexOf(guess.charAt(i))) + '0' + word.substring(word.indexOf(guess.charAt(i))+1, word.length);
         } else {
-            info[i] = 'not in word';
+            info[i] = 'absent';
         }
     };
     return info;

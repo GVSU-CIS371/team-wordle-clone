@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { defineStore } from "pinia";
 import { createUserWithEmailAndPassword, type User } from 'firebase/auth';
 import { create_user } from "@/router/statRoutes";
@@ -42,6 +42,6 @@ export const useAuthStore = defineStore('auth', {
         },
         setUser(user: User | null) {
             this.user = user;
-        }
+        },
     }
 });

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { guess_word } from '../router/wordRoutes'
 
 export type TileStatus = 'empty' | 'filled' | 'correct' | 'present' | 'absent'
 
@@ -12,6 +13,7 @@ type GameUIState = {
   currentRow: number
   currentCol: number
   message: string
+  word: string
 }
 
 function makeRow(): Tile[] {
@@ -26,7 +28,8 @@ export const useGameUIStore = defineStore('gameUI', {
     rows: Array.from({ length: 6 }, () => makeRow()),
     currentRow: 0,
     currentCol: 0,
-    message: ''
+    message: '',
+    word: ''
   }),
   getters: {
     currentGuess(state): string {
@@ -53,19 +56,24 @@ export const useGameUIStore = defineStore('gameUI', {
       this.rows[this.currentRow]![this.currentCol]!.status = 'empty'
       this.message = ''
     },
-    submitGuess() {
+    setWord(word: string) {
+      this.word = word;
+    },
+    submitGuess(guess: string, word: string) {
       if (this.currentGuess.length < 5) {
         this.message = 'Not enough letters'
         return
+      } else if (this.currentRow > 5) {
+        this.message = 'No more guesses left'
+        return
       }
-
+      const result = guess_word(guess, word)
+      for (let i = 0; i < 6; i++){
+        this.rows[this.currentRow]![i]!.status = result[i]! as TileStatus;
+      }
       this.message = 'Guess submitted'
       this.currentRow++
       this.currentCol = 0
-
-      if (this.currentRow > 5) {
-        this.message = 'No more guesses left'
-      }
     }
   }
 })

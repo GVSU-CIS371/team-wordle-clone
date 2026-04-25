@@ -1,26 +1,28 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import router from '../router/index.ts'
 import GuessGrid from '../components/guessgrid.vue'
-import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'
+/*import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'*/
 import { useAuthStore } from '../stores/auth.ts'
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
+import { get_word } from '../router/wordRoutes.ts';
+import { date_convert } from '../../util/date.ts'
 
-const router = useRouter()
 const authStore = useAuthStore()
 const game = useGameUIStore()
 
-onMounted(() => {
+onMounted(async () => {
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
-      // User is signed in
       authStore.setUser(user);
     } else {
       authStore.setUser(null);
       router.push('/login');
     }
   });
+    const word: string = await get_word(date_convert(new Date));
+    game.setWord(word);
 });
 
 function pressKey(letter: string) {
@@ -28,7 +30,7 @@ function pressKey(letter: string) {
 }
 
 function pressEnter() {
-  game.submitGuess()
+  game.submitGuess(game.currentGuess, game.word)
 }
 
 function pressBackspace() {
@@ -48,7 +50,7 @@ function pressBackspace() {
 
       <p class="message">{{ game.message }}</p>
 
-      <OnScreenKeyboard @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />
+      <!--<OnScreenKeyboard @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />-->
     </div>
   </section>
 </template>

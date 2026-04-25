@@ -1,6 +1,6 @@
 # team-wordle-clone
 
-This template should help get you started developing with Vue 3 in Vite.
+This is our wordle clone website!
 
 ## Recommended IDE Setup
 

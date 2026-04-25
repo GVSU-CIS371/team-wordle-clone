@@ -1,3 +1,5 @@
+import { get_score, update_score } from '../router/statRoutes'
+import type { User } from 'firebase/auth'
 import { defineStore } from 'pinia'
 
 type StatsState = {
@@ -15,11 +17,19 @@ export const useStatsStore = defineStore('stats', {
     bestGame: 0
   }),
   actions: {
-    loadPlaceholderStats() {
-      this.gamesPlayed = 4
-      this.wins = 3
-      this.averageGuesses = 4
-      this.bestGame = 2
+    async getStats(user: User) {
+      if (user.email != null) {
+        const stats = await get_score(user.email);
+        this.gamesPlayed = stats.games;
+        this.wins = stats.wins;
+        this.averageGuesses = stats.av;
+        this.bestGame = stats.short;
+      }
+    },
+    async update(user: User, score: number) {
+      if (user.email != null) {
+        await update_score(user.email, score);
+      }
     }
   }
 })
