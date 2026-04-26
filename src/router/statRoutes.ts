@@ -49,7 +49,7 @@ export async function get_score(username: string): Promise<user> {
 };
 
 export async function create_user(email: string): Promise<void> {
-  const users = collection(db, "wordlist");
+  const users = collection(db, "stats");
   await setDoc(doc(users, email), {
     av: 0,
     games: 0,
