@@ -8,7 +8,6 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
 import { get_word, guess_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
-import { play_game } from '../router/statRoutes.ts'
 
 const authStore = useAuthStore()
 const game = useGameUIStore()
@@ -25,9 +24,13 @@ onMounted(async () => {
   });
   const date: string = date_convert(new Date);
   const word: string = await get_word(date);
+  if (game.date === null) {
+    game.setDate(date);
+  } else if (game.date !== date) {
+    game.resetBoard()
+    game.setDate(date)
+  }
   game.setWord(word);
-  game.setDate(date);
-  play_game(game.user, date);
 });
 
 function pressKey(letter: string) {
@@ -36,6 +39,7 @@ function pressKey(letter: string) {
 
 function pressEnter() {
   game.submitGuess(game.currentGuess, game.word)
+  game.$persist()
 }
 
 function pressBackspace() {

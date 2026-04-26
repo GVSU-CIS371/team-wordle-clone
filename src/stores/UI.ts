@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { guess_word } from '../router/wordRoutes'
 import { list } from '../../util/word_list'
-import { update_score } from '../router/statRoutes'
+import { play_game, update_score } from '../router/statRoutes'
 
 export type TileStatus = 'empty' | 'filled' | 'correct' | 'present' | 'absent'
 
@@ -37,6 +37,7 @@ export const useGameUIStore = defineStore('gameUI', {
     date: '',
     user: ''
   }),
+  persist: true,
   getters: {
     currentGuess(state): string {
       return (state.rows[state.currentRow] ? state.rows[state.currentRow]!.map(tile => tile.letter).join('') : '').toLowerCase();
@@ -47,6 +48,7 @@ export const useGameUIStore = defineStore('gameUI', {
       this.rows = Array.from({ length: 6 }, () => makeRow())
       this.currentRow = 0
       this.currentCol = 0
+      this.message = ''
     },
     addLetter(letter: string) {
       if (this.currentRow > 5 || this.currentCol > 4) return
@@ -89,6 +91,7 @@ export const useGameUIStore = defineStore('gameUI', {
           this.currentRow++;
           if (this.currentRow > 5) {
             this.message = 'You lost'
+            play_game(this.user, this.date);
             return
           }
           this.currentCol = 0;
@@ -97,7 +100,6 @@ export const useGameUIStore = defineStore('gameUI', {
       }
       this.message = 'You won';
       update_score(this.user, this.currentRow+1, this.date);
-    },
-    persist: true
+    }
   }
 })
