@@ -12,6 +12,7 @@ defineProps<{
       v-for="(tile, index) in tiles"
       :key="index"
       class="guess-tile"
+      :class="[`guess-tile--${tile.status}`]"
     >
       <span class="guess-tile__letter">{{ tile.letter }}</span>
     </div>
