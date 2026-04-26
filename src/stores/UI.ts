@@ -39,7 +39,7 @@ export const useGameUIStore = defineStore('gameUI', {
   }),
   getters: {
     currentGuess(state): string {
-      return state.rows[state.currentRow] ? state.rows[state.currentRow]!.map(tile => tile.letter).join('') : ''
+      return (state.rows[state.currentRow] ? state.rows[state.currentRow]!.map(tile => tile.letter).join('') : '').toLowerCase();
     }
   },
   actions: {
@@ -72,6 +72,7 @@ export const useGameUIStore = defineStore('gameUI', {
       this.user = user;
     },
     submitGuess(guess: string, word: string) {
+      console.log(this.currentGuess)
       if (this.currentGuess.length < 5) {
         this.message = 'Not enough letters'
         return
@@ -83,10 +84,11 @@ export const useGameUIStore = defineStore('gameUI', {
         return
       }
       const result = guess_word(guess, word)
-      for (let i = 0; i < 6; i++){
+      for (let i = 0; i < 5; i++){
+        console.log(`${this.currentRow} ${i}`)
         this.rows[this.currentRow]![i]!.status = result[i]! as TileStatus;
       }
-      for (let j = 0; j < 6; j++){
+      for (let j = 0; j < 5; j++){
         if (this.rows[this.currentRow]![j]!.status !== 'correct'){
           this.message = 'Guess submitted';
           this.currentRow++;

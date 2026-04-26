@@ -2,7 +2,7 @@
 const emit = defineEmits<{
   (e: 'key', value: string): void
   (e: 'enter'): void
-  (e: 'delete'): void
+  (e: 'backspace'): void
 }>()
 
 const rows = [
@@ -18,7 +18,7 @@ function handleKey(value: string) {
   }
 
   if (value === '⌫') {
-    emit('delete')
+    emit('backspace')
     return
   }
 

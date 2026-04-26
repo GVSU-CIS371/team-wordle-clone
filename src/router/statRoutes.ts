@@ -20,6 +20,29 @@ const userConverter: FirestoreDataConverter<user> = {
   }
 };
 
+export async function play_game(username:string, date: string): Promise<void> {
+  const ref = await getDoc(doc(db, 'stats', username).withConverter(userConverter));
+    const userStats = ref.data();
+    if (userStats) {
+      const average: number = userStats.av;
+      const shortest: number | string = userStats.short;
+      const win: number = userStats.wins;
+      const windates: Array<string> = userStats.windates;
+      const game: number = windates.length;
+      if (!windates.includes(date)) {
+        windates.push(date);  
+      }    
+      const statsRef = collection(db, "stats");
+      await setDoc(doc(statsRef, username), {
+          av: average,
+          games: game,
+          short: shortest,
+          wins: win,
+          windates: windates
+        });
+    }
+}
+
 export async function update_score(username: string, score: number, date: string): Promise<void> {
     const ref = await getDoc(doc(db, 'stats', username).withConverter(userConverter));
     const userStats = ref.data();
@@ -30,11 +53,11 @@ export async function update_score(username: string, score: number, date: string
         if (score < 7) {
           win += 1;
         }
-        let shortest: number
+        let shortest: number | string;
         if (typeof userStats.short !== 'string'){
           shortest = Number(score) < userStats.short ? Number(score) : userStats.short;
         } else {shortest = Number(score)};
-        const windates = {...userStats.windates, date};
+        const windates: Array<string> = userStats.windates;
         const statsRef = collection(db, "stats");
         await setDoc(doc(statsRef, username), {
           av: average,

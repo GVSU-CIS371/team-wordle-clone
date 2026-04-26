@@ -1,13 +1,8 @@
 <script setup lang="ts">
-type TileState = 'empty' | 'correct' | 'present' | 'absent'
-
-type GuessTile = {
-  letter: string
-  state: TileState
-}
+import type { Tile } from '../stores/UI'
 
 defineProps<{
-  tiles: GuessTile[]
+  tiles: Tile[]
 }>()
 </script>
 
@@ -17,7 +12,6 @@ defineProps<{
       v-for="(tile, index) in tiles"
       :key="index"
       class="guess-tile"
-      :class="[`guess-tile--${tile.state}`]"
     >
       <span class="guess-tile__letter">{{ tile.letter }}</span>
     </div>

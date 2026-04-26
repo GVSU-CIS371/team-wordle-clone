@@ -2,13 +2,13 @@
 import { onMounted } from 'vue'
 import router from '../router/index.ts'
 import GuessGrid from '../components/guessgrid.vue'
-/*import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'*/
+import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'
 import { useAuthStore } from '../stores/auth.ts'
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
-import { get_word } from '../router/wordRoutes.ts';
+import { get_word, guess_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
-import { update_score } from '../router/statRoutes.ts';
+import { play_game } from '../router/statRoutes.ts'
 
 const authStore = useAuthStore()
 const game = useGameUIStore()
@@ -27,6 +27,7 @@ onMounted(async () => {
   const word: string = await get_word(date);
   game.setWord(word);
   game.setDate(date);
+  play_game(game.user, date);
 });
 
 function pressKey(letter: string) {
@@ -34,6 +35,7 @@ function pressKey(letter: string) {
 }
 
 function pressEnter() {
+  console.log(`${guess_word(game.currentGuess, game.word)}`)
   game.submitGuess(game.currentGuess, game.word)
 }
 
@@ -47,14 +49,14 @@ function pressBackspace() {
     <div class="game-card">
       <div class="game-head">
         <h1>Wordle Game</h1>
-        <p v-if="authStore.user" class="user-email">{{ authStore.user.email }}</p>
+        <p v-if="authStore.user" class="user-email">{{ game.user }}</p>
       </div>
 
       <GuessGrid :rows="game.rows" />
 
       <p class="message">{{ game.message }}</p>
 
-      <!--<OnScreenKeyboard @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />-->
+      <OnScreenKeyboard @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />
     </div>
   </section>
 </template>
