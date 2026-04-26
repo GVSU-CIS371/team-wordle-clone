@@ -9,6 +9,7 @@ import { useGameUIStore } from '../stores/UI.ts'
 import { get_word, guess_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
 import { play_game } from '../router/statRoutes.ts'
+import { mapGet } from 'firebase/firestore/pipelines'
 
 const authStore = useAuthStore()
 const game = useGameUIStore()
@@ -56,7 +57,8 @@ function pressBackspace() {
 
       <p class="message">{{ game.message }}</p>
 
-      <OnScreenKeyboard @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />
+      <OnScreenKeyboard v-if="game.message !== 'You won' && game.message !== 'You lost'"
+      @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />
     </div>
   </section>
 </template>

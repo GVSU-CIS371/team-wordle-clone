@@ -79,9 +79,6 @@ export const useGameUIStore = defineStore('gameUI', {
       } else if (!list.includes(this.currentGuess)){
         this.message = 'Not a word'
         return
-      } else if (this.currentRow > 5) {
-        this.message = 'No more guesses left'
-        return
       }
       const result = guess_word(guess, word)
       for (let i = 0; i < 5; i++){
@@ -92,6 +89,10 @@ export const useGameUIStore = defineStore('gameUI', {
         if (this.rows[this.currentRow]![j]!.status !== 'correct'){
           this.message = 'Guess submitted';
           this.currentRow++;
+          if (this.currentRow > 5) {
+            this.message = 'You lost'
+            return
+          }
           this.currentCol = 0;
           return;
         }

@@ -29,7 +29,7 @@ export async function play_game(username:string, date: string): Promise<void> {
       const win: number = userStats.wins;
       const windates: Array<string> = userStats.windates;
       const game: number = windates.length;
-      if (!windates.includes(date)) {
+      if (windates.indexOf(date) === -1) {
         windates.push(date);  
       }    
       const statsRef = collection(db, "stats");
@@ -81,6 +81,6 @@ export async function create_user(email: string): Promise<void> {
     games: 0,
     short: 'N/A',
     wins: 0,
-    windates: []
+    windates: [] as Array<string>
   });
 };
