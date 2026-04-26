@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { useAuthStore } from './stores/auth'; 
-const authStore = useAuthStore();
+import navbar from './components/navbar.vue';
 </script>
 
 <template>
+  <navbar />
   <div id = 'app'>
-    <nav class = 'navigation'>
-      <router-link to="/game">Game</router-link>
-      <router-link to="/stats">Stats</router-link>
-      <button v-if="authStore.user===null" @click="$router.push('/login')">Login</button>
-      <button v-else @click="authStore.signout">Logout</button>
-    </nav>
     <router-view />
   </div>
 </template>
 
 <style scoped>
+
+body, html {
+  margin: 0;
+  height: 100%;
+}
+
 header {
   line-height: 1.5;
 }
@@ -23,6 +23,15 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 @media (min-width: 1024px) {

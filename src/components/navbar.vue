@@ -1,0 +1,52 @@
+<script setup lang="ts">
+import { useAuthStore } from '../stores/auth'; 
+const authStore = useAuthStore();
+</script>
+
+<template>
+  <nav class = 'navigation'>
+    <div id="left">
+      <router-link to="/game">Game</router-link>
+      <router-link to="/stats">Stats</router-link>
+    </div>
+    <div id="right">
+      <button v-if="authStore.user===null" @click="$router.push('/login')">Login</button>
+      <button v-else @click="authStore.signout">Logout</button>
+    </div>
+  </nav>
+</template>
+
+<style lang="css" scoped>
+
+.navigation {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding: 1rem;
+  position: fixed; 
+  align-items: center;
+  justify-items: top;
+  top: 0; 
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 10vh;
+}
+
+.left {
+  display: flex;
+  gap: 20px;
+}
+
+.right {
+  margin-left: auto;
+}
+
+.navigation a:hover {
+  color: #0084ff;
+}
+</style>

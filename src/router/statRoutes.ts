@@ -8,6 +8,7 @@ export interface user {
     games: number;
     short: number | string;
     wins: number;
+    windates: Array<string>
 };
 
 const userConverter: FirestoreDataConverter<user> = {
@@ -19,7 +20,7 @@ const userConverter: FirestoreDataConverter<user> = {
   }
 };
 
-export async function update_score(username: string, score: number): Promise<void> {
+export async function update_score(username: string, score: number, date: string): Promise<void> {
     const ref = await getDoc(doc(db, 'stats', username).withConverter(userConverter));
     const userStats = ref.data();
     if (userStats) {
@@ -32,13 +33,15 @@ export async function update_score(username: string, score: number): Promise<voi
         let shortest: number
         if (typeof userStats.short !== 'string'){
           shortest = Number(score) < userStats.short ? Number(score) : userStats.short;
-        } else {shortest = Number(score)}
+        } else {shortest = Number(score)};
+        const windates = {...userStats.windates, date};
         const statsRef = collection(db, "stats");
         await setDoc(doc(statsRef, username), {
           av: average,
           games: game,
           short: shortest,
-          wins: win
+          wins: win,
+          windates: windates
         });
     };
 };
@@ -54,6 +57,7 @@ export async function create_user(email: string): Promise<void> {
     av: 0,
     games: 0,
     short: 'N/A',
-    wins: 0
+    wins: 0,
+    windates: []
   });
 };

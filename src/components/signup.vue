@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import router from '../router/index.ts'
 import { useAuthStore } from '../stores/auth.ts'
+import { create_user } from '../router/statRoutes.ts'
 
 const auth = useAuthStore()
 
@@ -24,6 +25,7 @@ async function submitSignup() {
   }
 
   await auth.registerUser(email.value, password.value)
+  await create_user(email.value)
 
   if (auth.user) {
     router.push('/game')
@@ -34,7 +36,7 @@ async function submitSignup() {
 <template>
   <section class="signup-view">
     <div class="signup-card">
-      <h1>Create Account</h1>
+      <h1 :style="{color:'black'}">Create Account</h1>
 
       <label class="field">
         <span>Email</span>

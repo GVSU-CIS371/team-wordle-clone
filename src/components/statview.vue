@@ -23,23 +23,23 @@ onMounted(async () => {
 
       <div class="stats-grid">
         <div class="stat-box">
-          <span class="stat-label" :style="{color: 'black'}">Games Played</span>
-          <span class="stat-value" :style="{color: 'black'}">{{ stats.gamesPlayed }}</span>
+          <span class="stat-label">Games Played</span>
+          <span class="stat-value">{{ stats.gamesPlayed }}</span>
         </div>
 
         <div class="stat-box">
-          <span class="stat-label" :style="{color: 'black'}">Wins</span>
-          <span class="stat-value" :style="{color: 'black'}">{{ stats.wins }}</span>
+          <span class="stat-label">Wins</span>
+          <span class="stat-value">{{ stats.wins }}</span>
         </div>
 
         <div class="stat-box">
-          <span class="stat-label" :style="{color: 'black'}">Average Guesses</span>
-          <span class="stat-value" :style="{color: 'black'}">{{ stats.averageGuesses }}</span>
+          <span class="stat-label">Average Guesses</span>
+          <span class="stat-value">{{ stats.averageGuesses }}</span>
         </div>
 
         <div class="stat-box">
-          <span class="stat-label" :style="{color: 'black'}">Best Game</span>
-          <span class="stat-value" :style="{color: 'black'}">{{ stats.bestGame }}</span>
+          <span class="stat-label">Best Game</span>
+          <span class="stat-value">{{ stats.bestGame }}</span>
         </div>
       </div>
     </div>

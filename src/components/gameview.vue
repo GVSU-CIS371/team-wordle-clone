@@ -8,6 +8,7 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
 import { get_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
+import { update_score } from '../router/statRoutes.ts';
 
 const authStore = useAuthStore()
 const game = useGameUIStore()
@@ -16,13 +17,16 @@ onMounted(async () => {
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
       authStore.setUser(user);
+      game.setUser(user.email!);
     } else {
       authStore.setUser(null);
       router.push('/login');
     }
   });
-    const word: string = await get_word(date_convert(new Date));
-    game.setWord(word);
+  const date: string = date_convert(new Date);
+  const word: string = await get_word(date);
+  game.setWord(word);
+  game.setDate(date);
 });
 
 function pressKey(letter: string) {
@@ -42,7 +46,7 @@ function pressBackspace() {
   <section class="game-view">
     <div class="game-card">
       <div class="game-head">
-        <h1 :style="{color: 'black'}">Wordle Game</h1>
+        <h1>Wordle Game</h1>
         <p v-if="authStore.user" class="user-email">{{ authStore.user.email }}</p>
       </div>
 
