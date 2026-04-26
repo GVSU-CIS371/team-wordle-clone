@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onKeyStroke } from '@vueuse/core'
+
 const emit = defineEmits<{
   (e: 'key', value: string): void
   (e: 'enter'): void
@@ -22,8 +24,22 @@ function handleKey(value: string) {
     return
   }
 
+  if (value === 'BACKSPACE') {
+    emit('backspace')
+    return
+  }
+
   emit('key', value)
 }
+
+onKeyStroke(true, (e) => {
+    const isLetter = /^[a-zA-Z]$/.test(e.key);
+    const isControlKey = ['Backspace', 'Enter'].includes(e.key);
+    if (isLetter || isControlKey) {
+        handleKey(e.key.toUpperCase());
+    }
+})
+
 </script>
 
 <template>

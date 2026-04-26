@@ -72,7 +72,6 @@ export const useGameUIStore = defineStore('gameUI', {
       this.user = user;
     },
     submitGuess(guess: string, word: string) {
-      console.log(this.currentGuess)
       if (this.currentGuess.length < 5) {
         this.message = 'Not enough letters'
         return
@@ -82,7 +81,6 @@ export const useGameUIStore = defineStore('gameUI', {
       }
       const result = guess_word(guess, word)
       for (let i = 0; i < 5; i++){
-        console.log(`${this.currentRow} ${i}`)
         this.rows[this.currentRow]![i]!.status = result[i]! as TileStatus;
       }
       for (let j = 0; j < 5; j++){
@@ -99,6 +97,7 @@ export const useGameUIStore = defineStore('gameUI', {
       }
       this.message = 'You won';
       update_score(this.user, this.currentRow+1, this.date);
-    }
+    },
+    persist: true
   }
 })

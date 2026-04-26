@@ -11,10 +11,12 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@vueuse/core": "^14.2.1",
     "dotenv": "^17.4.2",
     "firebase": "^12.12.0",
     "firebase-admin": "^13.8.0",
     "pinia": "^3.0.4",
+    "pinia-plugin-persistedstate": "^4.7.1",
     "seedrandom": "^3.0.5",
     "ts-node": "^10.9.2",
     "vitest": "^4.1.4",

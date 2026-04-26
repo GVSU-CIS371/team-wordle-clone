@@ -9,7 +9,6 @@ import { useGameUIStore } from '../stores/UI.ts'
 import { get_word, guess_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
 import { play_game } from '../router/statRoutes.ts'
-import { mapGet } from 'firebase/firestore/pipelines'
 
 const authStore = useAuthStore()
 const game = useGameUIStore()
@@ -36,7 +35,6 @@ function pressKey(letter: string) {
 }
 
 function pressEnter() {
-  console.log(`${guess_word(game.currentGuess, game.word)}`)
   game.submitGuess(game.currentGuess, game.word)
 }
 
