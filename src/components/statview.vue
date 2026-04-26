@@ -19,27 +19,27 @@ onMounted(async () => {
 <template>
   <section class="stats-view">
     <div class="stats-card">
-      <h1>Stats</h1>
+      <h1 :style="{color: 'black'}">Stats</h1>
 
       <div class="stats-grid">
         <div class="stat-box">
-          <span class="stat-label">Games Played</span>
-          <span class="stat-value">{{ stats.gamesPlayed }}</span>
+          <span class="stat-label" :style="{color: 'black'}">Games Played</span>
+          <span class="stat-value" :style="{color: 'black'}">{{ stats.gamesPlayed }}</span>
         </div>
 
         <div class="stat-box">
-          <span class="stat-label">Wins</span>
-          <span class="stat-value">{{ stats.wins }}</span>
+          <span class="stat-label" :style="{color: 'black'}">Wins</span>
+          <span class="stat-value" :style="{color: 'black'}">{{ stats.wins }}</span>
         </div>
 
         <div class="stat-box">
-          <span class="stat-label">Average Guesses</span>
-          <span class="stat-value">{{ stats.averageGuesses }}</span>
+          <span class="stat-label" :style="{color: 'black'}">Average Guesses</span>
+          <span class="stat-value" :style="{color: 'black'}">{{ stats.averageGuesses }}</span>
         </div>
 
         <div class="stat-box">
-          <span class="stat-label">Best Game</span>
-          <span class="stat-value">{{ stats.bestGame }}</span>
+          <span class="stat-label" :style="{color: 'black'}">Best Game</span>
+          <span class="stat-value" :style="{color: 'black'}">{{ stats.bestGame }}</span>
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ function pressBackspace() {
   <section class="game-view">
     <div class="game-card">
       <div class="game-head">
-        <h1>Wordle Game</h1>
+        <h1 :style="{color: 'black'}">Wordle Game</h1>
         <p v-if="authStore.user" class="user-email">{{ authStore.user.email }}</p>
       </div>
 

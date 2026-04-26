@@ -20,7 +20,7 @@ async function submitLogin() {
 <template>
   <section class="login-view">
     <div class="login-card">
-      <h1>Login</h1>
+      <h1 :style="{color: 'black'}" >Login</h1>
 
       <label class="field">
         <span>Email</span>
