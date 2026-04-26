@@ -16,7 +16,10 @@ onMounted(async () => {
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
       authStore.setUser(user);
+      if (game.user !== user.email) {
       game.setUser(user.email!);
+      game.resetBoard();
+      }
     } else {
       authStore.setUser(null);
       router.push('/login');
@@ -24,9 +27,9 @@ onMounted(async () => {
   });
   const date: string = date_convert(new Date);
   const word: string = await get_word(date);
-  if (game.date === null) {
+  if (game.date === '') {
     game.setDate(date);
-  } else if (game.date !== date) {
+  } else if (game.date !== '') {
     game.resetBoard()
     game.setDate(date)
   }

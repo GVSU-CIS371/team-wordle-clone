@@ -49,6 +49,8 @@ export const useGameUIStore = defineStore('gameUI', {
       this.currentRow = 0
       this.currentCol = 0
       this.message = ''
+      this.user = '',
+      this.date = ''
     },
     addLetter(letter: string) {
       if (this.currentRow > 5 || this.currentCol > 4) return
