@@ -7,9 +7,24 @@ const auth = useAuthStore()
 
 const email = ref('')
 const password = ref('')
+const confirmPassword = ref('')
+const localError = ref('')
 
-async function submitLogin() {
-  await auth.login(email.value, password.value)
+async function submitSignup() {
+  localError.value = ''
+
+  if (!email.value || !password.value) {
+    localError.value = 'Email and password are required'
+    return
+  }
+
+  if (password.value !== confirmPassword.value) {
+    localError.value = 'Passwords do not match'
+    return
+  }
+
+  await auth.registerUser(email.value, password.value)
+
   if (auth.user) {
     router.push('/game')
   }
@@ -17,9 +32,9 @@ async function submitLogin() {
 </script>
 
 <template>
-  <section class="login-view">
-    <div class="login-card">
-      <h1 :style="{color: 'black'}" >Login</h1>
+  <section class="signup-view">
+    <div class="signup-card">
+      <h1>Create Account</h1>
 
       <label class="field">
         <span>Email</span>
@@ -31,27 +46,33 @@ async function submitLogin() {
         <input v-model="password" type="password" />
       </label>
 
-      <p v-if="auth.error" class="error-text">{{ auth.error }}</p>
+      <label class="field">
+        <span>Confirm Password</span>
+        <input v-model="confirmPassword" type="password" />
+      </label>
 
-      <button type="button" class="primary-btn" @click="submitLogin()">Sign In</button>
+      <p v-if="localError" class="error-text">{{ localError }}</p>
+      <p v-else-if="auth.error" class="error-text">{{ auth.error }}</p>
+
+      <button type="button" class="primary-btn" @click="submitSignup()">Create Account</button>
 
       <p class="switch-text">
-        Need an account?
-        <router-link to="/signup" class="switch-link">Create one</router-link>
+        Already have an account?
+        <router-link to="/login" class="switch-link">Sign in</router-link>
       </p>
     </div>
   </section>
 </template>
 
 <style scoped>
-.login-view {
+.signup-view {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 70vh;
 }
 
-.login-card {
+.signup-card {
   width: min(100%, 24rem);
   padding: 1.5rem;
   background: #f9f8f5;
@@ -85,6 +106,7 @@ async function submitLogin() {
 
 .error-text {
   color: #a12c7b;
+  margin: 0;
 }
 
 .switch-text {

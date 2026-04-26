@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { defineStore } from "pinia";
 import { createUserWithEmailAndPassword, signOut, type User } from 'firebase/auth';
 import { create_user } from "@/router/statRoutes";
@@ -24,6 +24,7 @@ export const useAuthStore = defineStore('auth', {
     },
     actions: {
         async registerUser(email: string, password: string) {
+            this.error = null;
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 this.user = userCredential.user;
@@ -33,11 +34,12 @@ export const useAuthStore = defineStore('auth', {
             }
         },
         async login(email: string, password: string) {
+            this.error = null;
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 this.user = userCredential.user;
-            } catch (error) {
-                console.error("Error creating user document:", error);
+            } catch (error: unknown) {
+                if (error instanceof Error) {this.error = error;}
             }
         },
         setUser(user: User | null) {
