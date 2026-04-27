@@ -3,9 +3,7 @@ import navbar from './components/navbar.vue';
 </script>
 
 <template>
-  <teleport to="body">
-    <navbar/>
-  </teleport>
+  <navbar/>
   <div id = 'app'>
     <router-view />
   </div>

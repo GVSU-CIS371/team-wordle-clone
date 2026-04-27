@@ -32,9 +32,9 @@ const authStore = useAuthStore();
   position: sticky;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
   z-index: 1000;
-  margin-left: calc(-50vw + 50%);
+  align-self: flex-start;
 }
 
 .left {
