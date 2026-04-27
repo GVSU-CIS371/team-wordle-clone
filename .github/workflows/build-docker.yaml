@@ -17,7 +17,10 @@ jobs:
       uses: actions/checkout@v4
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag team-wordle-clone:latest
+    - name: Log in to docker
+      uses: docker/login-action@v3
+      with:
+        username: maxkollmeyer
+        password: ${{ secrets.DOCKERHUBTOKEN }}
     - name: Push to Docker hub
-      run: |
-        docker login -u maxkollmeyer -p {{ secrets.DOCKERHUBTOKEN }}
-        docker push team-wordle-clone:latest
+      run: docker push team-wordle-clone:latest
