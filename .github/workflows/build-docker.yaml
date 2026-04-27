@@ -23,4 +23,4 @@ jobs:
         username: maxkollmeyer
         password: ${{ secrets.DOCKERHUBTOKEN }}
     - name: Push to Docker hub
-      run: docker push team-wordle-clone:latest
+      run: docker push maxkollmeyer/team-wordle-clone:latest
