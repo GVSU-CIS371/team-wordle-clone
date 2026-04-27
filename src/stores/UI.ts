@@ -100,7 +100,7 @@ export const useGameUIStore = defineStore('gameUI', {
         }
       }
       this.message = 'You won';
-      await update_score(this.user, this.currentRow+1, this.date);
+      await update_score(this.user, this.currentRow+1);
       await play_game(this.user);
     }
   }

@@ -7,7 +7,6 @@ type StatsState = {
   wins: number
   averageGuesses: number
   bestGame: number | string
-  winDates: Array<string>
 }
 
 export const useStatsStore = defineStore('stats', {
@@ -16,14 +15,8 @@ export const useStatsStore = defineStore('stats', {
     wins: 0,
     averageGuesses: 0,
     bestGame: 0,
-    winDates: []
   }),
   actions: {
-    async update(user: User, score: number, date: string) {
-      if (user.email != null) {
-        await update_score(user.email, score, date);
-      }
-    },
     async getStats(user: User) {
       if (user.email != null) {
         const stats = await get_score(user.email);

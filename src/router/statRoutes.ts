@@ -37,20 +37,20 @@ export async function play_game(username:string): Promise<void> {
     }
 }
 
-export async function update_score(username: string, score: number, date: string): Promise<void> {
+export async function update_score(username: string, score: number): Promise<void> {
     const ref = await getDoc(doc(db, 'stats', username).withConverter(userConverter));
     const userStats = ref.data();
     if (userStats) {
         const average: number = (userStats.av + Number(score))/(userStats.games+1);
-        const game: number = userStats.games;
+        const game: number = userStats.games+1;
         let win: number = userStats.wins;
         if (score < 7) {
           win += 1;
         }
         let shortest: number | string;
         if (typeof userStats.short !== 'string'){
-          shortest = Number(score) < userStats.short ? Number(score) : userStats.short;
-        } else {shortest = Number(score)};
+          shortest = score < userStats.short ? score : userStats.short;
+        } else {shortest = score};
         const statsRef = collection(db, "stats");
         await setDoc(doc(statsRef, username), {
           av: average,
