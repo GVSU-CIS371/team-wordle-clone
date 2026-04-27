@@ -29,6 +29,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top:32px;
   min-height: 100vh;
   width: 100vw;
   height: 100vh;
