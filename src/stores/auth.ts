@@ -1,7 +1,7 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { defineStore } from "pinia";
 import { createUserWithEmailAndPassword, signOut, type User } from 'firebase/auth';
-import { create_user } from "@/router/statRoutes";
+import { create_user } from "../router/statRoutes.ts";
 
 const auth = getAuth();
 

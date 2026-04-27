@@ -1,4 +1,4 @@
-import { get_score, update_score } from '../router/statRoutes'
+import { get_score, update_score } from '../router/statRoutes.ts'
 import type { User } from 'firebase/auth'
 import { defineStore } from 'pinia'
 

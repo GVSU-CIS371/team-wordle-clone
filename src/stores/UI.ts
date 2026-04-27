@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { guess_word } from '../router/wordRoutes'
-import { list } from '../../util/word_list'
-import { play_game, update_score } from '../router/statRoutes'
+import { guess_word } from '../router/wordRoutes.ts'
+import { list } from '../../util/word_list.ts'
+import { play_game, update_score } from '../router/statRoutes.ts'
 
 export type TileStatus = 'empty' | 'filled' | 'correct' | 'present' | 'absent'
 
@@ -101,7 +101,6 @@ export const useGameUIStore = defineStore('gameUI', {
       }
       this.message = 'You won';
       await update_score(this.user, this.currentRow+1);
-      await play_game(this.user);
     }
   }
 })

@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import router from '../router/index.ts';
 import { useAuthStore } from '../stores/auth.ts'
-import { useStatsStore } from '@/stores/stats.ts';
+import { useStatsStore } from '../stores/stats.ts';
 
 const auth = useAuthStore()
 const stats = useStatsStore()
