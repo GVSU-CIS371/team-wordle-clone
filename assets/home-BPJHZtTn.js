@@ -1,0 +1,1 @@
+import{a as e,c as t,t as n,v as r}from"./_plugin-vue_export-helper-UV57D0-j.js";var i={};function a(n,i){return r(),t(`div`,null,[i[1]||=e(`h1`,{style:{color:`white`}},`Welcome to Wordle-Clone!`,-1),e(`button`,{onClick:i[0]||=e=>n.$router.push(`/game`)},`Play Game`)])}var o=n(i,[[`render`,a]]);export{o as default};
