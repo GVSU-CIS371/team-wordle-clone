@@ -19,6 +19,7 @@ export const useAuthStore = defineStore('auth', {
         loading: false,
         error: null
     }),
+    persist: true,
     getters: {
         getEmail(): string {return this.user ? this.user.email! : ''}
     },

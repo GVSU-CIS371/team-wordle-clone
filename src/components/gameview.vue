@@ -6,7 +6,7 @@ import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'
 import { useAuthStore } from '../stores/auth.ts'
 import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
-import { get_word, guess_word } from '../router/wordRoutes.ts';
+import { get_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
 
 const authStore = useAuthStore()
@@ -18,6 +18,7 @@ onMounted(async () => {
       if (game.user !== user.email) {
         game.resetBoard();
         game.setUser(user.email!);
+        game.$persist()
       }
     } else {
       game.setUser('');
@@ -31,6 +32,7 @@ onMounted(async () => {
   } else if (game.date !== date) {
     game.resetBoard()
     game.setDate(date)
+    game.$persist()
   }
   game.setWord(word);
 });
@@ -39,8 +41,8 @@ function pressKey(letter: string) {
   game.addLetter(letter)
 }
 
-function pressEnter() {
-  game.submitGuess(game.currentGuess, game.word)
+async function pressEnter() {
+  await game.submitGuess(game.currentGuess, game.word)
   game.$persist()
 }
 

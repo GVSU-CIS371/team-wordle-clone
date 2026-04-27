@@ -49,7 +49,6 @@ export const useGameUIStore = defineStore('gameUI', {
       this.currentRow = 0
       this.currentCol = 0
       this.message = ''
-      this.user = '',
       this.date = ''
     },
     addLetter(letter: string) {
@@ -75,7 +74,7 @@ export const useGameUIStore = defineStore('gameUI', {
     setUser(user: string) {
       this.user = user;
     },
-    submitGuess(guess: string, word: string) {
+    async submitGuess(guess: string, word: string) {
       if (this.currentGuess.length < 5) {
         this.message = 'Not enough letters'
         return
@@ -93,7 +92,7 @@ export const useGameUIStore = defineStore('gameUI', {
           this.currentRow++;
           if (this.currentRow > 5) {
             this.message = 'You lost'
-            play_game(this.user, this.date);
+            await play_game(this.user);
             return
           }
           this.currentCol = 0;
@@ -101,7 +100,8 @@ export const useGameUIStore = defineStore('gameUI', {
         }
       }
       this.message = 'You won';
-      update_score(this.user, this.currentRow+1, this.date);
+      await update_score(this.user, this.currentRow+1, this.date);
+      await play_game(this.user);
     }
   }
 })

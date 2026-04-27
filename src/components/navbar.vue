@@ -11,7 +11,7 @@ const authStore = useAuthStore();
     </div>
     <div id="right">
       <button v-if="authStore.user===null" @click="$router.push('/login')">Login</button>
-      <button v-else @click="authStore.signout">Logout</button>
+      <button v-else @click="authStore.signout; $router.push('/login')">Logout</button>
     </div>
   </nav>
 </template>
