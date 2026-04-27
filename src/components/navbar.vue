@@ -21,20 +21,20 @@ const authStore = useAuthStore();
 .navigation {
   list-style: none;
   display: flex;
-  margin: 0;
-  padding: 0;
   justify-content: space-between;
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding: 1rem;
-  position: fixed; 
+  position: sticky; 
   align-items: center;
   justify-items: top;
-  top: 0; 
-  top: 0; 
-  left: 0; 
-  width: 100vw; 
-  height: 10vh;
+  background-color: rgb(37, 36, 36);
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  margin-left: calc(-50vw + 50%);
 }
 
 .left {

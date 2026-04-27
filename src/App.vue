@@ -3,7 +3,9 @@ import navbar from './components/navbar.vue';
 </script>
 
 <template>
-  <navbar />
+  <teleport to="body">
+    <navbar/>
+  </teleport>
   <div id = 'app'>
     <router-view />
   </div>
@@ -14,6 +16,7 @@ import navbar from './components/navbar.vue';
 body, html {
   margin: 0;
   height: 100%;
+  padding: 0;
 }
 
 header {
@@ -29,7 +32,6 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top:32px;
   min-height: 100vh;
   width: 100vw;
   height: 100vh;
