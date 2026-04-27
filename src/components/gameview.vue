@@ -15,13 +15,12 @@ const game = useGameUIStore()
 onMounted(async () => {
   onAuthStateChanged(getAuth(), (user) => {
     if (user) {
-      authStore.setUser(user);
       if (game.user !== user.email) {
-      game.setUser(user.email!);
-      game.resetBoard();
+        game.resetBoard();
+        game.setUser(user.email!);
       }
     } else {
-      authStore.setUser(null);
+      game.setUser('');
       router.push('/login');
     }
   });
@@ -29,7 +28,7 @@ onMounted(async () => {
   const word: string = await get_word(date);
   if (game.date === '') {
     game.setDate(date);
-  } else if (game.date !== '') {
+  } else if (game.date !== date) {
     game.resetBoard()
     game.setDate(date)
   }
