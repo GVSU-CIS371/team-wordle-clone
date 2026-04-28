@@ -18,6 +18,7 @@ type GameUIState = {
   word: string
   date: string
   user: string
+  gameComplete: boolean
 }
 
 function makeRow(): Tile[] {
@@ -35,7 +36,8 @@ export const useGameUIStore = defineStore('gameUI', {
     message: '',
     word: '',
     date: '',
-    user: ''
+    user: '',
+    gameComplete: false
   }),
   persist: true,
   getters: {
@@ -50,6 +52,7 @@ export const useGameUIStore = defineStore('gameUI', {
       this.currentCol = 0
       this.message = ''
       this.date = ''
+      this.gameComplete = false
     },
     addLetter(letter: string) {
       if (this.currentRow > 5 || this.currentCol > 4) return
@@ -91,6 +94,7 @@ export const useGameUIStore = defineStore('gameUI', {
           this.message = 'Guess submitted';
           this.currentRow++;
           if (this.currentRow > 5) {
+            this.gameComplete = true
             this.message = 'You lost'
             await play_game(this.user);
             return
@@ -99,6 +103,7 @@ export const useGameUIStore = defineStore('gameUI', {
           return;
         }
       }
+      this.gameComplete = true
       this.message = 'You won';
       await update_score(this.user, this.currentRow+1);
     }

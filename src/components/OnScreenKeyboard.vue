@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import { onKeyStroke } from '@vueuse/core'
+import type { TileStatus } from '../stores/UI'
 
 const emit = defineEmits<{
   (e: 'key', value: string): void
   (e: 'enter'): void
   (e: 'backspace'): void
 }>()
+
+withDefaults(defineProps<{
+  keyStates?: Partial<Record<string, TileStatus>>
+}>(), {
+  keyStates: () => ({})
+})
 
 const rows = [
   ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -51,7 +58,10 @@ onKeyStroke(true, (e) => {
         type="button"
         class="keyboard-key"
         :class="{
-          'keyboard-key--wide': key === 'ENTER' || key === '⌫'
+          'keyboard-key--wide': key === 'ENTER' || key === '⌫',
+          'keyboard-key--correct': keyStates[key] === 'correct',
+          'keyboard-key--present': keyStates[key] === 'present',
+          'keyboard-key--absent': keyStates[key] === 'absent'
         }"
         @click="handleKey(key)"
       >
@@ -91,6 +101,21 @@ onKeyStroke(true, (e) => {
   text-transform: uppercase;
   flex: 1 1 0;
   max-width: 2.75rem;
+}
+
+.keyboard-key--correct {
+  background: #6aaa64;
+  color: #ffffff;
+}
+
+.keyboard-key--present {
+  background: #c9b458;
+  color: #ffffff;
+}
+
+.keyboard-key--absent {
+  background: #787c7e;
+  color: #ffffff;
 }
 
 .keyboard-key--wide {

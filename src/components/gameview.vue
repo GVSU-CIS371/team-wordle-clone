@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import router from '../router/index.ts'
 import GuessGrid from '../components/guessgrid.vue'
 import OnScreenKeyboard from '../components/OnScreenKeyboard.vue'
@@ -8,9 +8,37 @@ import { onAuthStateChanged, getAuth } from 'firebase/auth';
 import { useGameUIStore } from '../stores/UI.ts'
 import { get_word } from '../router/wordRoutes.ts';
 import { date_convert } from '../../util/date.ts'
+import type { TileStatus } from '../stores/UI.ts'
 
 const authStore = useAuthStore()
 const game = useGameUIStore()
+
+const statusPriority: Record<TileStatus, number> = {
+  empty: 0,
+  filled: 1,
+  absent: 2,
+  present: 3,
+  correct: 4
+}
+
+const keyStates = computed<Partial<Record<string, TileStatus>>>(() => {
+  const states: Partial<Record<string, TileStatus>> = {}
+
+  for (const row of game.rows) {
+    for (const tile of row) {
+      if (!tile.letter || tile.status === 'empty' || tile.status === 'filled') {
+        continue
+      }
+
+      const currentStatus = states[tile.letter]
+      if (!currentStatus || statusPriority[tile.status] > statusPriority[currentStatus]) {
+        states[tile.letter] = tile.status
+      }
+    }
+  }
+
+  return states
+})
 
 onMounted(async () => {
   onAuthStateChanged(getAuth(), (user) => {
@@ -63,7 +91,8 @@ function pressBackspace() {
 
       <p class="message">{{ game.message }}</p>
 
-      <OnScreenKeyboard v-if="game.message !== 'You won' && game.message !== 'You lost'"
+      <OnScreenKeyboard v-if="(game.message!=='You win' && game.message!=='You lost')"
+      :key-states="keyStates"
       @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />
     </div>
   </section>
