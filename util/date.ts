@@ -1,3 +1,9 @@
 export function date_convert(date: Date): string {
-    return date.toLocaleDateString('en-US', { timeZone: 'America/New_York' });
+	const options: Intl.DateTimeFormatOptions = {
+  		timeZone: 'America/New_York',
+  		year: 'numeric',
+  		month: '2-digit',
+  		day: '2-digit'
+	};
+    return date.toLocaleDateString('en-US', options);
 };
