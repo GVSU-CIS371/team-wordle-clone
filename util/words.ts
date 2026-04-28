@@ -1,4 +1,4 @@
-import { list } from './word_list.ts';
+import { list } from './word_list_possible.ts';
 import seedrandom from 'seedrandom';
 
 const getWord = (date: string): string => {
