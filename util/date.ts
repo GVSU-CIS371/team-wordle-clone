@@ -5,5 +5,5 @@ export function date_convert(date: Date): string {
   		month: '2-digit',
   		day: '2-digit'
 	};
-    return date.toLocaleDateString('en-US', options);
+    return `${date.toLocaleDateString('en-US', options)}`;
 };
