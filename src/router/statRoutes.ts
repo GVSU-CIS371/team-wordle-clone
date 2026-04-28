@@ -42,7 +42,10 @@ export async function update_score(username: string, score: number): Promise<voi
     const userStats = ref.data();
     if (userStats) {
         const win: number = userStats.wins+1;
-        const average: number = (userStats.av*win + score)/(win);
+        let average: number;
+        if (userStats.wins > 0) {
+          average = (userStats.av*win + score)/(win);
+        } else {average = score;};
         const game: number = userStats.games+1;
         let shortest: number | string;
         if (typeof userStats.short !== 'string'){
