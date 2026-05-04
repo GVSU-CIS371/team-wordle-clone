@@ -62,7 +62,7 @@ export const useGameUIStore = defineStore('gameUI', {
       this.message = ''
     },
     removeLetter() {
-      if (this.currentCol === 0 || this.currentRow > 5) return
+      if ((this.currentCol === 0 || this.currentRow > 5) && (this.message !== 'You won' && this.message !== 'You lost')) return
       this.currentCol--
       this.rows[this.currentRow]![this.currentCol]!.letter = ''
       this.rows[this.currentRow]![this.currentCol]!.status = 'empty'

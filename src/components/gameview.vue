@@ -91,7 +91,7 @@ function pressBackspace() {
 
       <p class="message">{{ game.message }}</p>
 
-      <OnScreenKeyboard v-if="(game.message!=='You win' && game.message!=='You lost')"
+      <OnScreenKeyboard v-if="(game.message!=='You won' && game.message!=='You lost')"
       :key-states="keyStates"
       @key="pressKey" @enter="pressEnter" @backspace="pressBackspace" />
     </div>

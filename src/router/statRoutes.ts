@@ -44,7 +44,7 @@ export async function update_score(username: string, score: number): Promise<voi
         const win: number = userStats.wins+1;
         let average: number;
         if (userStats.wins > 0) {
-          average = (userStats.av*win + score)/(win);
+          average = Number(((userStats.av*win + score)/(win)).toFixed(2));
         } else {average = score;};
         const game: number = userStats.games+1;
         let shortest: number | string;
@@ -73,6 +73,5 @@ export async function create_user(email: string): Promise<void> {
     games: 0,
     short: 'N/A',
     wins: 0,
-    windates: [] as Array<string>
   });
 };

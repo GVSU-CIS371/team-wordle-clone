@@ -1347,4 +1347,5 @@ export const list = [
 	"theta",
 	"stake",
 	"arbor",
+	"wordl"
 ];
