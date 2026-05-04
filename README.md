@@ -1,19 +1,21 @@
-# **Term Project**  
+# team-wordle-clone
 
-**Hello, Students!** 👋 
+This is our wordle clone website!
 
-Your **Term Project** is an essential part of the course. Please review the instructions carefully to ensure a smooth and successful experience.  
+## Project Setup
 
-- [**Project Instructions**](https://gvsu-cis371.github.io/projects/term.html)  
+```sh
+npm install
+```
 
-### **Getting Started:**  
-1. **Read** the full instructions carefully.  
-2. **Understand** all requirements before starting.  
-3. **Ask questions** if anything is unclear.  
+### Compile and Hot-Reload for Development
 
-### **Tips for Success:**  
-- Follow guidelines closely.  
-- Plan your work and stay on schedule.  
-- Test your project regularly.  
+```sh
+npm run dev
+```
 
-Best of luck! 🚀  
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```

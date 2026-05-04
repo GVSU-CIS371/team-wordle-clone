@@ -1,0 +1,26 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag maxkollmeyer/team-wordle-clone
+    - name: login
+      uses: docker/login-action@v3
+      with:
+        username: maxkollmeyer
+        password: ${{ secrets.DOCKERHUBTOKEN }}
+    - name: Push to Docker hub
+      run: docker push maxkollmeyer/team-wordle-clone:latest
